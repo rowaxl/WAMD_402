@@ -14,7 +14,8 @@ onload = function () {
   const report = document.querySelector('#report')
 
   report.innerHTML = '<ul class="list-group"></ul>'
-  const reportList = report.querySelector('ul')
+
+  const items = []
 
   function addToCart(e) {
     e.preventDefault();
@@ -33,7 +34,7 @@ onload = function () {
 
     deliveryMethods.forEach(option => {
       if (option.checked) {
-        deliveryFee = option.value
+        deliveryFee = parseFloat(option.value)
       }
     })
 
@@ -51,26 +52,35 @@ onload = function () {
 
     form.reset()
 
-    updateCartItems(newItem)
+    items.push(newItem)
+    updateCartItems()
   }
 
   function currencyFormat(number) {
     return new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'CAD' }).format(number)
   }
 
-  function updateCartItems(item) {
-    const subtotal = item.price * item.quantity;
-    const taxAmount = item.tax * subtotal;
-    const newItem = document.createElement('li')
-    newItem.classList.add('list-group-item')
-    newItem.innerHTML = `
-      <p>${item.label} * ${item.quantity}: ${currencyFormat(subtotal)}</p>
-      <p>Tax: ${currencyFormat(taxAmount)}</p>
-      <p>Delevery Fee: ${currencyFormat(item.deliveryFee)}</p>
-      <p>Total: ${currencyFormat(subtotal + taxAmount + item.deliveryFee)}</p>
-    `
+  function updateCartItems() {
+    const reportList = report.querySelector('ul')
 
-    reportList.appendChild(newItem)
+    reportList.innerHTML = items.map(item => {
+      const subtotal = item.price * item.quantity
+      const taxAmount = item.tax * subtotal
+
+      const date = new Date().toLocaleString()
+
+      return `
+        <li class="list-group-item">
+          <p>Item: ${item.label}</p>
+          <p>Quantity: ${item.quantity}</p>
+          <p>Ordered at: ${date}</p>
+          <p class="mb-4"><strong>Subtotal: ${currencyFormat(subtotal)}</strong></p>
+          <p>Tax: ${currencyFormat(taxAmount)}</p>
+          <p>Delevery Fee: ${currencyFormat(item.deliveryFee)}</p>
+          <p><strong>Total: ${currencyFormat(subtotal + taxAmount + item.deliveryFee)}</strong></p>
+        </li>
+      `
+    }).join('')
   }
 
   form.addEventListener('submit', addToCart)
