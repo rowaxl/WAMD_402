@@ -26,9 +26,10 @@ window.onload = () => {
 
   function updateTodos() {
     todoList.innerHTML = todos.map((todo, i) => `
-      <li class="list-group-item" id="todo${i}">
+      <li class="todo-item list-group-item" id="todo${i}">
         <input class="mr-2" type="checkbox" data-index=${i} ${todo.done ? 'checked' : ''} />
         <label>${todo.text}</label>
+        <button class="btn-delete btn btn-danger" data-index=${i}>X</button>
       </li>
     `).join('')
   }
@@ -41,11 +42,20 @@ window.onload = () => {
 
     const targetTodo = todoList.querySelector(`#todo${targetIndex}`)
     targetTodo.classList.toggle('done')
-  } 
+  }
+
+  function deleteTodo(e) {
+    if (!e.target.matches('button')) return;
+
+    const targetIndex = e.target.dataset.index;
+    todos.splice(targetIndex, 1)
+    updateTodos()
+  }
 
   todoInput.addEventListener('change', handleInput)
   todoInput.addEventListener('keyup', handleInput)
 
   newTodoForm.addEventListener('submit', addNewTodo)
   todoList.addEventListener('click', toggleDone)
+  todoList.addEventListener('click', deleteTodo)
 }
