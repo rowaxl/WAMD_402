@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <style>
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+      li.done label {
+        text-decoration: line-through;
+        color: #aaa;
+      }
+      .btn-delete {
+        position: absolute;
+        right: 10px;
+      }
+    </style>
+    <title>Shopping Cart</title>
+</head>
+<body>
+  <div class="container">
+    <div class="card my-3">
+      <div class="card-header">
+        <h2>Add new tasks</h2>
+      </div>
+      <div class="card-body">
+        <form id="form-new-todo">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Enter your task" aria-label="New Task">
+            <div class="input-group-append">
+              <button class="btn btn-primary" id="btn-add" type="submit">
+                <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-plus" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                  <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+            
+        </form>
+      </div>
+    </div>
+    <div class="my-2 card" id ="todos">
+      <div class="card-header">
+        <h2>Tasks:</h2>
+      </div>
+      <div class="card-body">
+        <ul class="list-group">
+  
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
+  <script src="index.js"></script>
+</body>
+</html>
