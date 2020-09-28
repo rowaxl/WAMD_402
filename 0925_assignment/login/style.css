@@ -1,0 +1,39 @@
+body{
+  margin:20px 50px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+h2{
+  margin:0;
+}
+p{
+  padding:0;
+}
+label{
+  color:#101357;
+}
+
+.content-wrap {
+  width: min-content;
+}
+
+.content-before {
+  text-align: center;
+  color: #101357;
+  background-color: #90b3DF;
+  width: 100%;
+}
+
+.content-before h2 {
+  padding: 10px;
+  display: block;
+  text-align: center;
+}
+
+.content {
+  opacity: 0;
+  display: none;
+}
+
+.content form {
+  height: 100%;
+}
