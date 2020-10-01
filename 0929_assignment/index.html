@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="libs/jquery-ui.min.css">
+    <style>
+      *,
+      *:before,
+      *:after {
+        box-sizing: inherit;
+      }
+      .btn-delete {
+        position: absolute;
+      }
+      .employee-list {
+        width: 100%;
+        height: auto;
+      }
+      .hide {
+        display: none;
+        opacity: 0;
+      }
+      .show {
+        display: block;
+        opacity: 1;
+      }
+    </style>
+    <title>Employee Management System</title>
+</head>
+<body>
+  <div class="container">
+    <div class="card my-3">
+      <div class="card-header">
+        <h2>Add new employee</h2>
+      </div>
+
+      <div class="card-body">
+        <form id="form-new-employ">
+          <div class="row mb-4">
+            <div class="input-group col-4">
+              <input id="fname" type="text" class="form-control" placeholder="Enter First Name" aria-label="First Name" data-type='fname'>
+            </div>
+            <div class="input-group col-4">
+              <input id="lname" type="text" class="form-control" placeholder="Enter Last Name" aria-label="Last Name" data-type='fname'>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="input-group col-4">
+              <input id="email" type="text" class="form-control" placeholder="Enter E-mail address" aria-label="E-mail" data-type='fname'>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="input-group col-4">
+              <input id="date" type="text" class="form-control datepicker" placeholder="Enter Joined Date" aria-label="Joined Date" data-type='fname'>
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="input-group col-2">
+              <input id="city" type="text" class="form-control" placeholder="Enter City Name" aria-label="City Name" data-type='fname'>
+            </div>
+            <div class="input-group col-2">
+              <input id="postal" type="text" class="form-control" placeholder="Enter Postal Code" aria-label="Postal Code" data-type="postal">
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-4">
+              <div class="form-group">
+                <label for="label-availability">Select Availability</label>
+                <select multiple class="form-control" id="label-availability" data-type='availability'>
+                  <option value="mon">Monday</option>
+                  <option value="tue">Tuesday</option>
+                  <option value="wed">Wednesday</option>
+                  <option value="thu">Thursday</option>
+                  <option value="fri">Friday</option>
+                  <option value="sat">Saturday</option>
+                  <option value="sun">Sunday</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-2">
+              <button type="submit" class="btn btn-success">
+                Submit
+              </button>
+            </div>
+          </div>
+
+          <div class="row error-messages"></div>
+        </form>
+      </div>
+    </div>
+    <div class="my-2 card">
+      <button id="btn-show-list" class="btn btn-primary">Show Employee List</button>
+      <div class="card-body hide">
+        <table class="employee-list">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>First Name</th>
+              <th>Last Name</th>
+              <th>Email Name</th>
+              <th>Join Date</th>
+              <th>Address</th>
+              <th>Availability</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <script src="libs/jquery.min.js"></script>
+  <script src="libs/jquery-ui.min.js"></script>
+  <script src="libs/index.js"></script>
+</body>
+</html>
