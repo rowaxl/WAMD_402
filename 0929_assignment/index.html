@@ -11,9 +11,6 @@
       *:after {
         box-sizing: inherit;
       }
-      .btn-delete {
-        position: absolute;
-      }
       .employee-list {
         width: 100%;
         height: auto;
@@ -25,6 +22,10 @@
       .show {
         display: block;
         opacity: 1;
+      }
+      .btn-delete {
+        width: 20px;
+        height: 20px;
       }
     </style>
     <title>Employee Management System</title>
@@ -40,25 +41,25 @@
         <form id="form-new-employ">
           <div class="row mb-4">
             <div class="input-group col-4">
-              <input id="fname" type="text" class="form-control" placeholder="Enter First Name" aria-label="First Name" data-type='fname'>
+              <input id="fname" type="text" class="form-control" placeholder="Enter First Name" aria-label="First Name" data-type="fname">
             </div>
             <div class="input-group col-4">
-              <input id="lname" type="text" class="form-control" placeholder="Enter Last Name" aria-label="Last Name" data-type='fname'>
-            </div>
-          </div>
-          <div class="row mb-4">
-            <div class="input-group col-4">
-              <input id="email" type="text" class="form-control" placeholder="Enter E-mail address" aria-label="E-mail" data-type='fname'>
+              <input id="lname" type="text" class="form-control" placeholder="Enter Last Name" aria-label="Last Name" data-type="lname">
             </div>
           </div>
           <div class="row mb-4">
             <div class="input-group col-4">
-              <input id="date" type="text" class="form-control datepicker" placeholder="Enter Joined Date" aria-label="Joined Date" data-type='fname'>
+              <input id="email" type="text" class="form-control" placeholder="Enter E-mail address" aria-label="E-mail" data-type="email">
+            </div>
+          </div>
+          <div class="row mb-4">
+            <div class="input-group col-4">
+              <input id="date" type="text" class="form-control datepicker" placeholder="Enter Joined Date" aria-label="Joined Date" data-type="date">
             </div>
           </div>
           <div class="row mb-4">
             <div class="input-group col-2">
-              <input id="city" type="text" class="form-control" placeholder="Enter City Name" aria-label="City Name" data-type='fname'>
+              <input id="city" type="text" class="form-control" placeholder="Enter City Name" aria-label="City Name" data-type="city">
             </div>
             <div class="input-group col-2">
               <input id="postal" type="text" class="form-control" placeholder="Enter Postal Code" aria-label="Postal Code" data-type="postal">
@@ -69,14 +70,14 @@
             <div class="col-4">
               <div class="form-group">
                 <label for="label-availability">Select Availability</label>
-                <select multiple class="form-control" id="label-availability" data-type='availability'>
-                  <option value="mon">Monday</option>
-                  <option value="tue">Tuesday</option>
-                  <option value="wed">Wednesday</option>
-                  <option value="thu">Thursday</option>
-                  <option value="fri">Friday</option>
-                  <option value="sat">Saturday</option>
-                  <option value="sun">Sunday</option>
+                <select multiple class="form-control" id="label-availability" data-type="availability">
+                  <option value="Monday">Monday</option>
+                  <option value="Tuesday">Tuesday</option>
+                  <option value="Wednesday">Wednesday</option>
+                  <option value="Thursday">Thursday</option>
+                  <option value="Friday">Friday</option>
+                  <option value="Saturday">Saturday</option>
+                  <option value="Sunday">Sunday</option>
                 </select>
               </div>
             </div>
@@ -90,13 +91,13 @@
             </div>
           </div>
 
-          <div class="row error-messages"></div>
+          <div id="error-messages" class="mt-4"></div>
         </form>
       </div>
     </div>
     <div class="my-2 card">
       <button id="btn-show-list" class="btn btn-primary">Show Employee List</button>
-      <div class="card-body hide">
+      <div id="employee-list-wrap" class="card-body hide">
         <table class="employee-list">
           <thead>
             <tr>
@@ -110,7 +111,7 @@
               <th></th>
             </tr>
           </thead>
-          <tbody></tbody>
+          <tbody id="employee-list-body"></tbody>
         </table>
       </div>
     </div>
