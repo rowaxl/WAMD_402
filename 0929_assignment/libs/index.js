@@ -170,6 +170,10 @@ $(function () {
   });
 
   showList.on('click', () => {
+    if (employees.length < 1) {
+      return alert('There are no employee yet!');
+    }
+
     const wrap = $('#employee-list-wrap');
     wrap.slideToggle().toggleClass('hide');
 
