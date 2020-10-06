@@ -1,0 +1,35 @@
+.conatiner {
+  max-width: 1280px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: auto;
+}
+
+.droppable {
+  width: 320px;
+  height: 320px;
+  border: 3px solid;
+  padding: 15px 20px;
+  border-radius: 2px;
+}
+
+.droppable:nth-of-type(1) {
+  background-color: lightgreen;
+  border-color: orange;
+  border-right: none;
+}
+
+.droppable:nth-of-type(2) {
+  background-color: lightgreen;
+  border-color: darkgreen;
+  border-left: none;
+}
+
+.todos {
+  background-color: bisque;
+  padding: 10px 15px;
+  margin-bottom: 5px;
+}
