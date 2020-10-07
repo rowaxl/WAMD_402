@@ -5,7 +5,7 @@ const ERROR_MESSAGE = {
   availability: 'One or more availability have to be set!',
   fname: 'Frist name cannot be empty!',
   email: 'Invalid e-mail address!',
-  date: 'Cannot choose date before today!',
+  date: 'Cannot choose the future date!',
   postal: 'Invalid post code!',
 };
 
@@ -46,7 +46,7 @@ $(function () {
       case 'date':
         const today = new Date();
         today.setHours(0, 0, 0, 0);
-        return new Date(value) >= today;
+        return new Date(value) <= today;
       case 'postal':
         return /^[ABCEGHJKLMNPRSTVXY]\d[ABCEGHJKLMNPRSTVWXYZ]( )?\d[ABCEGHJKLMNPRSTVWXYZ]\d$/g.test(value)
       default:
