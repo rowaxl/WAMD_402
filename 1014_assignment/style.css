@@ -2,3 +2,12 @@
   display: none;
 }
 
+.book-img img {
+  width: 100%;
+  height: auto;
+  max-width: 360px;
+}
+
+.book-img img:hover {
+  filter: brightness(150%);
+}
