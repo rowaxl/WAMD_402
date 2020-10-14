@@ -1,14 +1,18 @@
 const ERROR_MESSAGE = {
-  '400': 'Invalid format. Please change it to YYYY-MM-DD format or empty',
-  '401': 'You are unauthorized. Please set your API KEY first',
+  '400': 'Invalid format. Please change it to YYYY-MM-DD format or empty.',
+  '401': 'You are unauthorized. Please set your API KEY first.',
 }
 
 $(() => {
+  let API_KEY = '';
   const searchForm = $('#form-search-book');
   const searchInput = $('#search-query');
   const resultCard = $('#results');
   const resultText = $('#result-text');
   const resultList = $('#result-list');
+
+  const inputKey = $('#input-key');
+  const buttonSave = $('#btn-save-key');
 
   async function searchBooks(e) {
     e.preventDefault();
@@ -16,6 +20,7 @@ $(() => {
     const query = searchInput.val();
     const result = await getBookList(query)
       .catch((error) => {
+        console.error(error)
         return renderError(error.status);
       });
 
@@ -70,12 +75,12 @@ $(() => {
     const date = query.length > 0 ? query : 'current'
     const url = `https://api.nytimes.com/svc/books/v3/lists/${date}/hardcover-fiction.json?api-key=${API_KEY}`
 
-    return new Promise((resovle, reject) => {
+    return new Promise((resolve, reject) => {
       $.ajax({
         url,
         dataType: 'json',
         success: (res) => {
-          resovle(sanitizeBookData(res.results.books));
+          resolve(sanitizeBookData(res.results.books));
         },
         error: (res) => {
           reject(res)
@@ -102,5 +107,29 @@ $(() => {
     return books
   }
 
+  function saveAPIKey() {
+    localStorage.setItem('nyt-api-key', inputKey.val());
+
+    $('.modal').removeClass('show');
+    $('.modal-backdrop').remove();
+
+    loadAPIKey();
+    inputKey.val('');
+  }
+
+  function loadAPIKey() {
+    API_KEY = localStorage.getItem('nyt-api-key');
+
+    if (API_KEY) {
+      $("#btn-auth").removeClass('btn-warning').addClass('btn-success').text('Authorized')
+    } else {
+      $("#btn-auth").removeClass('btn-success').addClass('btn-warning').text('Authorize')
+    }
+  }
+
+  loadAPIKey();
+
   searchForm.on('submit', searchBooks);
+
+  buttonSave.on('click', saveAPIKey);
 })
