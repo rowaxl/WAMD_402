@@ -50,7 +50,7 @@ $(() => {
             </div>
             <div class="col-sm-7">
               <div class="card-body">
-                <h4 class="card-title">${book.title}</h4>
+                <h4 class="card-title"><span class="mr-2 rank-chip">#${String(book.rank).padStart(2, '0')}</span> ${book.title}</h4>
                 <h5 class="card-subtitle my-2">${book.author}</h5>
                 <h6 class="card-text">${book.description}</h6>
               </div>
