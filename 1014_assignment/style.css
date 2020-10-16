@@ -39,3 +39,29 @@
   border-top: 33px solid #C45500;
   z-index: -1;
 }
+
+.fav-btn {
+  position: absolute;
+  top: 15px;
+  right: 5px;
+  z-index: 10;
+  color: #ddd;
+
+  transition: all 300ms ease-in-out;
+}
+
+.fav-btn.favored {
+  background-color: red;
+  color: #fff;
+}
+
+@media only screen and (min-width: 1024px) {
+  #result-list {
+    flex-direction: row !important;
+    flex-wrap: wrap !important;
+  }
+
+  #result-list li {
+    max-width: 50%;
+  }
+}

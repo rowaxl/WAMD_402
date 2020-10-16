@@ -14,8 +14,10 @@ $(() => {
   const inputKey = $('#input-key');
   const buttonSave = $('#btn-save-key');
 
+  const favourited = localStorage.getItem('favourited') ? JSON.parse(localStorage.getItem('favourited')) : [];
+
   async function searchBooks(e) {
-    e.preventDefault();
+    if (e) e.preventDefault();
 
     const query = searchInput.val();
     const result = await getBookList(query)
@@ -29,6 +31,22 @@ $(() => {
     renderResults(query, result);
   }
 
+  function handleFavourite() {
+    const target = $(this).data('book-isbn10')
+    const index = favourited.findIndex(isbn => isbn === target)
+
+    if (index > -1) {
+      favourited.splice(index, 1);
+      $(this).removeClass('favored');
+    } else {
+      favourited.push(target);
+      $(this).addClass('favored');
+    }
+
+
+    localStorage.setItem('favourited', JSON.stringify(favourited));
+  }
+
   function renderResults(query, results) {
     resultCard.removeClass('hide');
     resultText.removeClass('text-danger');
@@ -37,8 +55,9 @@ $(() => {
     resultList.empty();
 
     results.forEach(book => {
-      const bookItem = $('<li></li>');
+      const bookItem = $(`<li></li>`);
       bookItem
+        .attr('id', book.isbn10)
         .addClass('list-group-item')
         .html(`
         <div class="card border-none">
@@ -50,17 +69,28 @@ $(() => {
             </div>
             <div class="col-sm-7">
               <div class="card-body">
-                <h4 class="card-title"><span class="mr-2 rank-chip">#${String(book.rank).padStart(2, '0')}</span> ${book.title}</h4>
+                <h4 class="card-title mr-4">
+                  <span class="mr-2 rank-chip">#${String(book.rank).padStart(2, '0')}</span>
+                  ${book.title}
+                </h4>
                 <h5 class="card-subtitle my-2">${book.author}</h5>
                 <h6 class="card-text">${book.description}</h6>
               </div>
             </div>
+
+            <button class="fav-btn btn rounded-circle ${book.isFavourite ? 'favored' : ''}" data-book-isbn10="${book.isbn10}">
+              <svg width = "1em" height = "1em" viewBox = "0 0 16 16" class= "bi bi-heart-fill" fill = "currentColor" xmlns = "http://www.w3.org/2000/svg" >
+                <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314z"/>
+              </svg>
+            </button>
           </div>
         </div>
         `)
 
       resultList.append(bookItem);
     })
+
+    $('.fav-btn').unbind().click(handleFavourite);
   }
 
   function renderError(errorStatus) {
@@ -89,6 +119,10 @@ $(() => {
     })
   }
 
+  function isFavourited(isbn) {
+    return favourited.includes(isbn)
+  }
+
   function sanitizeBookData(results) {
     let books = []
     try {
@@ -98,7 +132,9 @@ $(() => {
         image: data.book_image,
         description: data.description,
         rank: data.rank,
-        amazon_product_url: data.amazon_product_url
+        amazon_product_url: data.amazon_product_url,
+        isbn10: data.primary_isbn10,
+        isFavourite: isFavourited(data.primary_isbn10)
       })).sort((a, b) => a.rank < b.rank)
     } catch (e) {
       console.error(e)
@@ -128,6 +164,9 @@ $(() => {
   }
 
   loadAPIKey();
+  if (API_KEY) {
+    searchBooks();
+  }
 
   searchForm.on('submit', searchBooks);
 
