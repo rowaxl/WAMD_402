@@ -1,3 +1,4 @@
 day-*/*
 .DS_Store
 env.js
+.vscode
