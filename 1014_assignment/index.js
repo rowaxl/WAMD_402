@@ -4,6 +4,7 @@ const ERROR_MESSAGE = {
 }
 
 $(() => {
+  // variables and selectors
   let API_KEY = '';
   const searchForm = $('#form-search-book');
   const searchInput = $('#search-query');
@@ -14,13 +15,20 @@ $(() => {
   const inputKey = $('#input-key');
   const buttonSave = $('#btn-save-key');
 
+  const categorySelect = $('#select-category');
+
   const favourited = localStorage.getItem('favourited') ? JSON.parse(localStorage.getItem('favourited')) : [];
 
+  let categories = [];
+
+  // functions
   async function searchBooks(e) {
     if (e) e.preventDefault();
 
     const query = searchInput.val();
-    const result = await getBookList(query)
+    const selectedCategory = categorySelect.val();
+
+    const result = await getBookList(query, selectedCategory)
       .catch((error) => {
         console.error(error)
         return renderError(error.status);
@@ -50,7 +58,9 @@ $(() => {
   function renderResults(query, results) {
     resultCard.removeClass('hide');
     resultText.removeClass('text-danger');
-    resultText.text(`Best sellers of ${query ? query : 'the latest'}:`);
+
+    const categoryText = categorySelect.val() ? $('#select-category option:selected').text() : "Hardcover Fiction";
+    resultText.text(`Best sellers of ${categoryText} in ${query ? query : 'the latest'}:`);
 
     resultList.empty();
 
@@ -101,9 +111,9 @@ $(() => {
     resultList.empty();
   }
 
-  function getBookList(query) {
+  function getBookList(query, category) {
     const date = query.length > 0 ? query : 'current'
-    const url = `https://api.nytimes.com/svc/books/v3/lists/${date}/hardcover-fiction.json?api-key=${API_KEY}`
+    const url = `https://api.nytimes.com/svc/books/v3/lists/${date}/${category ? category : 'hardcover-fiction'}.json?api-key=${API_KEY}`
 
     return new Promise((resolve, reject) => {
       $.ajax({
@@ -111,6 +121,23 @@ $(() => {
         dataType: 'json',
         success: (res) => {
           resolve(sanitizeBookData(res.results.books));
+        },
+        error: (res) => {
+          reject(res)
+        }
+      })
+    })
+  }
+
+  function getCategories() {
+    const url = `https://api.nytimes.com/svc/books/v3/lists/names.json?api-key=${API_KEY}`
+
+    return new Promise((resolve, reject) => {
+      $.ajax({
+        url,
+        dataType: 'json',
+        success: (res) => {
+          resolve(sanitizeCategoryData(res.results));
         },
         error: (res) => {
           reject(res)
@@ -143,6 +170,21 @@ $(() => {
     return books
   }
 
+  function sanitizeCategoryData(results) {
+    let categories = []
+
+    try {
+      categories = results.map(data => ({
+        "display_name": data.display_name,
+        "list_name_encoded": data.list_name_encoded
+      }))
+    } catch (e) {
+      console.error(e)
+    }
+
+    return categories;
+  }
+
   function saveAPIKey() {
     localStorage.setItem('nyt-api-key', inputKey.val());
 
@@ -163,11 +205,30 @@ $(() => {
     }
   }
 
+  async function setCategories() {
+    categories = await getCategories();
+
+    categories.forEach(category => {
+      const categoryOption = $('<option></option>')
+
+      categoryOption
+        .text(category.display_name)
+        .val(category.list_name_encoded)
+      
+      categorySelect.append(categoryOption)
+    })
+  }
+
+  // execute when page loaded
   loadAPIKey();
+
   if (API_KEY) {
     searchBooks();
   }
 
+  setCategories();
+
+  // event listeners
   searchForm.on('submit', searchBooks);
 
   buttonSave.on('click', saveAPIKey);

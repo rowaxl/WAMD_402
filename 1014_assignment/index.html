@@ -23,6 +23,13 @@
       <div class="card-body">
         <form id="form-search-book">
           <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <span class="input-group-text">
+                <select class="custom-select" name="select-category" id="select-category">
+                  <option value="">Select Book Categories</option>
+                </select>
+              </span>
+            </div>
             <input id="search-query" type="text" class="form-control" placeholder="Enter the date on YYYY-MM-DD" aria-label="Book title">
             <div class="input-group-append">
               <button class="btn btn-primary" id="btn-add" type="submit">

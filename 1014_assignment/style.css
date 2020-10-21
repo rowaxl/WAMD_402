@@ -65,3 +65,7 @@
     max-width: 50%;
   }
 }
+
+#search-query {
+  height: auto;
+}
