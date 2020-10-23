@@ -4,3 +4,4 @@
 - [Sep 24: Todo list with jQuery](0924_exercise/todo-with-jquery/index.html)
 - [Sep 29: Employee manage assignment](0929_assignment/index.html)
 - [Oct 14: Book search assignment](1014_assignment/index.html)
+- [Oct 23: Google Book API search assignment](1023_assignment/index.html)
