@@ -3,6 +3,8 @@ const ERROR_MESSAGE = {
   '401': 'You are unauthorized. Please set your API KEY first.',
 }
 
+const bookItemURL = 'bookItems.html'
+
 $(() => {
   // variables and selectors
   let API_KEY = '';
@@ -73,7 +75,7 @@ $(() => {
         <div class="card border-none">
           <div class="row no-gutters">
             <div class="col-sm-5">
-              <a class="book-img" href="${book.amazon_product_url}" target="_blank">
+              <a class="book-img" href="${bookItemURL}?isbn=${book.isbn13}&title=${book.title}" target="_blank">
                 <img class="card-img" src="${book.image}" alt="${book.title}">
               </a>
             </div>
@@ -161,6 +163,7 @@ $(() => {
         rank: data.rank,
         amazon_product_url: data.amazon_product_url,
         isbn10: data.primary_isbn10,
+        isbn13: data.primary_isbn13,
         isFavourite: isFavourited(data.primary_isbn10)
       })).sort((a, b) => a.rank < b.rank)
     } catch (e) {
